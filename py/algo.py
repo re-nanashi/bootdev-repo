@@ -146,3 +146,80 @@ def num_countries_in_days(max_days, factor):
         count += 1
 
     return count
+
+
+def tsp(cities, paths, dist):
+    ppaths = permutations(cities)
+    for path in ppaths:
+        totdist = 0
+        for i in range(1, len(path)):
+            totdist += paths[path[i - 1]][path[i]]
+        if totdist < dist:
+            return True
+    return False
+
+    # don't touch below this line
+
+
+def permutations(arr):
+    retval = []
+    retval = helper(retval, arr, len(arr))
+    return retval
+
+
+def helper(res, arr, n):
+    if n == 1:
+        tmp = arr.copy()  # original array
+        res.append(tmp)
+    else:
+        for i in range(n):
+            res = helper(res, arr, n - 1)
+            if n % 2 == 1:
+                arr[n - 1], arr[i] = arr[i], arr[n - 1]
+            else:
+                arr[0], arr[n - 1] = arr[n - 1], arr[0]
+    return res
+
+# we have 26 characters
+# if the password is length 1:: we will need 26 times to guess
+# if the password is lenght 2:: we will need 702; 26^2 + 26
+
+
+def get_num_guesses(length):
+    count = 0
+    for i in range(1, length):
+        count += 26**i
+    return count
+
+# PRIME FACTORS ALGORITHM
+# Given a large number, return a list of all the prime factors.
+#
+# prime_factors(8) -> [2, 2, 2]
+# prime_factors(10) -> [2, 5]
+# prime_factors(24) -> [2, 2, 2, 3]
+
+# Divide N by two as many times as you can do so evenly (no remainder). For each division, append a 2 to the list of prime factors
+# At this point, N must be odd. Start a loop that iterates over all odd numbers from 3 to the square root of N inclusive. Use math.sqrt().
+# For each number i, if N can be divided evenly by i, then divide N by i and append i to the list. Repeat this (nested loop) until i can't divide evenly into N, then move on to the next i
+# If N is still greater than 2 after that loop, it must still be prime, so just append it to the list.
+# Return the list of primes
+# ASSIGNMENT
+# Complete the prime_factors function according to the given algorithm. Notice how the algorithm gets much slower as the size of the input (in bits) grows.
+#
+# Note: The returned list should only contain ints, no floats.
+
+
+def prime_factors(n):
+    pfactors = []
+    while n % 2:
+        n /= 2
+        pfactors.append(2)
+    end = math.sqrt(n)
+    for i in range(3, int(end) + 1):
+        while n % i == 0:
+            n /= i
+            pfactors.append(i)
+    if n > 2:
+        pfactors.append(n)
+
+    return pfactors

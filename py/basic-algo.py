@@ -1,4 +1,4 @@
-def binary_search(target, arr):
+def binary_search_(target, arr):
     low = 0
     high = len(arr) - 1
     while low <= high:
@@ -79,3 +79,17 @@ def quick_sort(nums, low, high):
         p = partition(nums, low, high)
         quick_sort(nums, low, p - 1)
         quick_sort(nums, p + 1, high)
+
+
+def selection_sort(nums):
+    for i in range(len(nums)):
+        smallest_idx = i
+        for j in range(smallest_idx+1, len(nums)):
+            if nums[j] < nums[smallest_idx]:
+                smallest_idx = j
+        nums[i], nums[smallest_idx] = nums[smallest_idx], nums[i]
+    return nums
+
+
+def binary_search(data, followers):
+    pass
